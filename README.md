@@ -1,3 +1,3 @@
-# testing_riverpod
+# Notes POC app
 
-A new Flutter project.
+A Flutter project used to measure time to create a sample app without using AI at all. 
