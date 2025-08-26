@@ -1,0 +1,68 @@
+---
+alwaysApply: true
+---
+
+// Note: This is a recommended project structure, but be flexible and adapt to existing project structures.
+// Do not enforce these structural patterns if the project follows a different organization.
+// Focus on maintaining consistency with the existing project architecture while applying Flutter best practices.
+
+// Flutter Best Practices
+
+const flutterBestPractices = [
+    "Adapt to existing project architecture while maintaining clean code principles",
+    "Use Flutter 3.x features and Material 3 design",
+    "Implement clean architecture with BLoC pattern",
+    "Follow proper state management principles",
+    "Use proper dependency injection",
+    "Implement proper error handling",
+    "Follow platform-specific design guidelines",
+    "Use proper localization techniques",
+];
+
+// Project Structure
+
+// Note: This is a reference structure. Adapt to the project's existing organization
+
+const projectStructure = `
+lib/
+  core/
+    constants/
+    theme/
+    utils/
+    widgets/
+  data/
+    datasources/
+    models/
+      feature1/
+      feature2/
+    repositories/
+  domain/
+    entities/
+      feature1/
+      feature2/
+    repositories/
+    usecases/
+  ui/
+    feature1/
+      bloc/
+      pages/
+      widgets/
+    feature1/
+      bloc/
+      pages/
+      widgets/
+  l10n/
+  main.dart
+test/
+  unit/
+  widget/
+  integration/
+`;
+
+Use MVVM + Repository patter with UseCases. 
+- Domain defines contracts and usecases
+- Data implementes contracts
+- UI contains Blocs
+- Bloc has access ONLY to usecases (via DI - getIt)
+- Usecase gets data from repository and provides it to Bloc
+- Repository gets data from service

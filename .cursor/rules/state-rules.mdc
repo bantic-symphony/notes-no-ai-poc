@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+// Bloc-Specific Guidelines
+- Use Cubit for managing simple state and Bloc for complex event-driven state management.
+- Extend states with Freezed for immutability.
+- Use descriptive and meaningful event names for Bloc.
+- Handle state transitions and side effects in Bloc's mapEventToState.
+- Prefer context.read() or context.watch() for accessing Cubit/Bloc states in widgets.
