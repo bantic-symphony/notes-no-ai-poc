@@ -14,9 +14,9 @@ class HomeScreen extends StatelessWidget {
           child: GridView.count(
             crossAxisCount: 2,
             children: [
-              NoteCard(note: Note(title: "First", description: "Description of my First note"),),
-              NoteCard(note: Note(title: "Second", description: "Description of my Second note")),
-              NoteCard(note: Note(title: "The one after Second", description: "Description of my Third note"))
+              NoteCard(note: Note(id: 1, title: "First", description: "Description of my First note"),),
+              NoteCard(note: Note(id: 2, title: "Second", description: "Description of my Second note")),
+              NoteCard(note: Note(id: 3, title: "The one after Second", description: "Description of my Third note"))
             ],
           ),
         ),
