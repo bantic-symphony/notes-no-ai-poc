@@ -37,6 +37,7 @@ class NotesServiceImpl implements NoteService {
   Future<List<NoteDto>> getNotes() async {
     try {
       final result = await dataSource.fetchNotes();
+      logger.i("Notes loaded (${result.length})");
       return result;
     } catch (e) {
       logger.e("Fetching notes filed: ${e.toString()}");
@@ -48,6 +49,7 @@ class NotesServiceImpl implements NoteService {
   Future<int> updateNote(NoteDto note) async {
     try {
       final result = await dataSource.updateNote(note);
+      logger.i("Note updated from: newNote(${note.toString()})");
       return result;
     } catch (e) {
       logger.e("Updating note filed: $e");
@@ -59,6 +61,7 @@ class NotesServiceImpl implements NoteService {
   Future<NoteDto> getNote(String noteId) async {
     try {
       final result = await dataSource.getNote(noteId);
+      logger.i("Note fetched: (${result.toString()})");
       return result;
     } catch (e) {
       logger.e("Getting note filed: $e");

@@ -27,7 +27,7 @@ class NoteDto {
 
   @override
   String toString() {
-    return '''NoteDto(
+    return '''(
     id: $id,
     title: $title,
     content: $content,

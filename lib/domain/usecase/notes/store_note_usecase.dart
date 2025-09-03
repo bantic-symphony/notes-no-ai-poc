@@ -6,5 +6,11 @@ class StoreNoteUsecase {
   final NotesRepository repo;
   const StoreNoteUsecase(this.repo);
 
-  Future<Result<int>> call(Note note) => repo.addNote(note);
+  Future<Result<int>> call(Note note) {
+    if (note.id == -1) {
+      return repo.addNote(note);
+    } else {
+      return repo.updateNote(note);
+    }
+  }
 }

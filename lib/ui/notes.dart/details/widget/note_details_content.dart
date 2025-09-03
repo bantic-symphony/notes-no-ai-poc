@@ -14,40 +14,34 @@ class NoteDetailsContent extends StatefulWidget {
 
 class _NoteDetailsContentState extends State<NoteDetailsContent> {
   final TextEditingController _titleController = TextEditingController();
-
   final TextEditingController _desriptionController = TextEditingController();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _titleController.text = widget.note.title;
-  //   _desriptionController.text = widget.note.content;
-  // }
+  int createdAt = DateTime.now().millisecondsSinceEpoch;
+  int id = DateTime.now().millisecondsSinceEpoch;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.done_outline),
-        onPressed: () {
-          final nowTimestamp = DateTime.now().millisecondsSinceEpoch;
-          final note = Note(
-            id: nowTimestamp,
-            content: _desriptionController.text,
-            title: _titleController.text,
-            createdAt: nowTimestamp,
-          );
-          context.read<NoteDetailsBloc>().add(SaveNote(note));
-        },
-      ),
-      body: BlocBuilder<NoteDetailsBloc, NoteDetailsState>(
-        builder: (context, state) {
-          if (state is NoteLoaded) {
-            _titleController.text = state.note.title;
-            _desriptionController.text = state.note.content;
-          }
-
-          return SafeArea(
+    return BlocBuilder<NoteDetailsBloc, NoteDetailsState>(
+      builder: (context, state) {
+        if (state is NoteLoaded) {
+          _titleController.text = state.note.title;
+          _desriptionController.text = state.note.content;
+          createdAt = state.note.createdAt;
+          id = state.note.id;
+        }
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.done_outline),
+            onPressed: () {
+              final note = Note(
+                id: id,
+                content: _desriptionController.text,
+                title: _titleController.text,
+                createdAt: createdAt,
+              );
+              context.read<NoteDetailsBloc>().add(SaveNote(note));
+            },
+          ),
+          body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -80,9 +74,9 @@ class _NoteDetailsContentState extends State<NoteDetailsContent> {
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
