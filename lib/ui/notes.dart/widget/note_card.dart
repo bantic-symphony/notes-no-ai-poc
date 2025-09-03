@@ -29,7 +29,7 @@ class NoteCard extends StatelessWidget {
             ),
             Divider(height: 5, indent: 4, endIndent: 4),
             Text(
-              note.description,
+              note.content,
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               style: TextStyle().copyWith(color: Colors.black.withAlpha(150)),
