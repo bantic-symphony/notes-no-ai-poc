@@ -26,6 +26,7 @@ class NotesServiceImpl implements NoteService {
   Future<int> deleteNote(NoteDto note) async {
     try {
       final result = await dataSource.deleteNote(note);
+      logger.i("Note deleted: (${note.toString()})");
       return result;
     } catch (e) {
       logger.e("Deleting note filed: $e");

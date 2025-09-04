@@ -7,6 +7,7 @@ import 'package:testing_riverpod/data/service/note_service.dart';
 import 'package:testing_riverpod/data/service/notes_service_impl.dart';
 import 'package:testing_riverpod/data/service/sqlf_data_source_impl.dart';
 import 'package:testing_riverpod/domain/repo/notes_repositroy.dart';
+import 'package:testing_riverpod/domain/usecase/notes/delete_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_all_notes_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/store_note_usecase.dart';
@@ -47,8 +48,12 @@ Future<void> setupLocators() async {
     () => GetNoteUsecase(locator()),
   );
 
+  locator.registerLazySingleton<DeleteNoteUsecase>(
+    () => DeleteNoteUsecase(locator()),
+  );
+
   //Provide blocs
-  locator.registerFactory<NotesBloc>(() => NotesBloc(locator()));
+  locator.registerFactory<NotesBloc>(() => NotesBloc(locator(), locator()));
 
   locator.registerFactory<NoteDetailsBloc>(
     () => NoteDetailsBloc(locator(), locator()),

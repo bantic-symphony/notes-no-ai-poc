@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:path/path.dart';
 import 'package:testing_riverpod/app_router.dart';
 import 'package:testing_riverpod/domain/model/home/notes.dart';
 import 'package:testing_riverpod/ui/notes.dart/notes_bloc.dart';
@@ -26,6 +25,14 @@ class NotesScreen extends StatelessWidget {
                 GoRouter.of(context).pushNamed(
                   AppRoutes.noteDetails,
                   pathParameters: {"id": state.noteId},
+                );
+
+              case NoteDeleted():
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${state.note} deleted!'),
+                    backgroundColor: Colors.redAccent,
+                  ),
                 );
             }
           },
