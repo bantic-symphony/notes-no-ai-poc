@@ -20,20 +20,13 @@ class NotesScreen extends StatelessWidget {
       child: Scaffold(
         body: BlocConsumer<NotesBloc, NotesState>(
           listener: (context, state) {
-            switch (state) {
-              case GoToNewNote():
-                GoRouter.of(context).pushNamed(
-                  AppRoutes.noteDetails,
-                  pathParameters: {"id": state.noteId},
-                );
-
-              case NoteDeleted():
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${state.note} deleted!'),
-                    backgroundColor: Colors.redAccent,
-                  ),
-                );
+            if (state is NoteDeleted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('${state.note} deleted!'),
+                  backgroundColor: Colors.redAccent,
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -46,7 +39,9 @@ class NotesScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            context.read<NotesBloc>().add(NavigateToNewNote());
+            GoRouter.of(
+              context,
+            ).pushNamed(AppRoutes.noteDetails, pathParameters: {"id": "-1"});
           },
           label: Text("New note"),
         ),

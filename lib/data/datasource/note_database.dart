@@ -34,7 +34,7 @@ class NoteDatabase {
           id INTEGER PRIMARY KEY,
           title TEXT NOT NULL,
           content TEXT NOT NULL,
-          created_at INTEGER NOT NULL
+          created_at TEXT NOT NULL
         )
       ''');
   }

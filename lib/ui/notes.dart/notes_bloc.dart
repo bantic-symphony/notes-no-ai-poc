@@ -30,6 +30,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
   }
 
   void _deleteNote(DeleteNote event, Emitter<NotesState> emit) async {
+    emit(Loading());
     final result = await _deleteNoteUsecase(event.note);
     final _ = switch (result) {
       Success() => add(FetchNotes()),

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing_riverpod/core/error/result.dart';
+import 'package:testing_riverpod/domain/model/home/note.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/store_note_usecase.dart';
 import 'package:testing_riverpod/ui/notes.dart/details/note_details_event.dart';
@@ -9,6 +10,8 @@ class NoteDetailsBloc extends Bloc<NoteDetailsEvent, NoteDetailsState> {
   final StoreNoteUsecase _storeNoteUsecase;
   final GetNoteUsecase _getNoteUseCase;
 
+  Note _note = Note();
+
   NoteDetailsBloc(this._storeNoteUsecase, this._getNoteUseCase)
     : super(LoadingNote()) {
     on<SaveNote>(_saveNote);
@@ -16,11 +19,13 @@ class NoteDetailsBloc extends Bloc<NoteDetailsEvent, NoteDetailsState> {
   }
 
   void _saveNote(SaveNote event, Emitter<NoteDetailsState> emit) async {
-    final result = await _storeNoteUsecase(event.note);
+    final result = await _storeNoteUsecase(
+      _note.copyWith(title: event.title, content: event.content),
+    );
     switch (result) {
-      case Success<int>():
-        emit(Created());
-      case Failure<int>():
+      case Success():
+        emit(Created(_note.id != -1));
+      case Failure():
         emit(NotSavedError());
     }
   }
@@ -31,6 +36,7 @@ class NoteDetailsBloc extends Bloc<NoteDetailsEvent, NoteDetailsState> {
     final result = await _getNoteUseCase(event.noteId);
     switch (result) {
       case Success():
+        _note = result.value;
         emit(NoteLoaded(result.value));
       case Failure():
         emit(FailedLoadingNote());

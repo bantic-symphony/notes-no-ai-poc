@@ -27,7 +27,8 @@ class NotesRepositoryImpl implements NotesRepository {
   @override
   Future<Result<int>> addNote(Note note) async {
     try {
-      final result = await service.addNote(note.toDto());
+      final now = DateTime.now();
+      final result = await service.addNote(note.copyWith(id : now.millisecondsSinceEpoch, createdAt: now.toIso8601String()).toDto());
       return Success(result);
     } catch (e) {
       return Failure(Exception(e));

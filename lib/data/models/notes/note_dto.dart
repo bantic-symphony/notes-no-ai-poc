@@ -9,7 +9,7 @@ class NoteDto {
   final int id;
   final String title;
   final String content;
-  final int createdAt;
+  final String createdAt;
 
   factory NoteDto.fromJson(Map<String, dynamic> json) => NoteDto(
     id: json['id'],

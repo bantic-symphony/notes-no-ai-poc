@@ -17,6 +17,8 @@ class SqlfDataSourceImpl implements SqlfDataSource {
       throw Exception("No notes created.");
     }
 
+    logger.i("(${notesMaps.length}) notes loaded");
+
     return List.generate(
       notesMaps.length,
       (index) => NoteDto.fromJson(notesMaps[index]),
@@ -49,6 +51,7 @@ class SqlfDataSourceImpl implements SqlfDataSource {
     if (noteJson.isEmpty) {
       throw Exception("Note with id $noteId does not exsit.");
     }
+    logger.i("Note with id: $noteId loaded.");
 
     return List.generate(
       noteJson.length,

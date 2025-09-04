@@ -1,10 +1,9 @@
-import 'package:testing_riverpod/domain/model/home/note.dart';
-
 abstract class NoteDetailsEvent {}
 
 class SaveNote extends NoteDetailsEvent {
-  final Note note;
-  SaveNote(this.note);
+  final String title;
+  final String content;
+  SaveNote({required this.title, required this.content});
 }
 
 class GetNote extends NoteDetailsEvent {

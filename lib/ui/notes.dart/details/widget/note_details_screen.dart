@@ -9,17 +9,22 @@ class NoteDetailsScreen extends StatelessWidget {
   const NoteDetailsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return BlocListener<NoteDetailsBloc, NoteDetailsState>(
-      listener: (context, state) => {
-        if (state == Created())
-          {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: const Text('Note created!'))),
+      listener: (context, state) {
+        if (state is Created) {
+          final String toastText = state.isUpdated
+              ? 'Note updated!'
+              : 'Note created!';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(toastText),
+              backgroundColor: Colors.greenAccent,
+            ),
+          );
 
-            context.pop(),
-          },
+          context.pop();
+        }
       },
       child: NoteDetailsContent(),
     );
