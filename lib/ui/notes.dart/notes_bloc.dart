@@ -1,25 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing_riverpod/core/error/result.dart';
+import 'package:testing_riverpod/domain/model/home/note.dart';
+import 'package:testing_riverpod/domain/model/home/notes.dart';
 import 'package:testing_riverpod/domain/usecase/notes/delete_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_all_notes_usecase.dart';
 import 'package:testing_riverpod/ui/notes.dart/notes_event.dart';
 import 'package:testing_riverpod/ui/notes.dart/notes_state.dart';
+import 'package:testing_riverpod/ui/notes.dart/widget/filter_popup_menu.dart';
 
 class NotesBloc extends Bloc<NotesEvent, NotesState> {
   final GetAllNotesUsecase _getAllNotesUsecase;
   final DeleteNoteUsecase _deleteNoteUsecase;
+
+  final Notes _notes = Notes(notes: List.empty(growable: true));
 
   NotesBloc(this._getAllNotesUsecase, this._deleteNoteUsecase)
     : super(Loading()) {
     on<FetchNotes>(_fetchAllNotes);
     on<NavigateToNewNote>(_goToNewNote);
     on<DeleteNote>(_deleteNote);
+    on<FilterNotes>(_filterNotes);
   }
 
   void _fetchAllNotes(FetchNotes event, Emitter<NotesState> emit) async {
     final result = await _getAllNotesUsecase();
     final value = switch (result) {
-      Success() => Loaded(notes: result.value),
+      Success() => _handleSuccess(result.value),
       Failure() => _handleError(result.value),
     };
     emit(value);
@@ -38,7 +45,28 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     };
   }
 
+  void _filterNotes(FilterNotes event, Emitter<NotesState> emit) async {
+    debugPrint("_notes before sorting: ${_notes.notes}");
+    switch (event.option) {
+      case FilterOptions.byDate:
+        _notes.notes.sort((Note a, Note b) => b.id.compareTo(a.id));
+      case FilterOptions.byTitle:
+        _notes.notes.sort(
+          (Note a, Note b) =>
+              a.title[0].toLowerCase().compareTo(b.title[0].toLowerCase()),
+        );
+    }
+    debugPrint("_notes after sorting ${event.option.name}: ${_notes.notes}");
+    emit(Loaded(notes: _notes));
+  }
+
   Error _handleError(Exception exctepion) {
     return Error(message: exctepion.toString());
+  }
+
+  Loaded _handleSuccess(Notes notes) {
+    _notes.notes.clear();
+    _notes.notes.addAll(notes.notes);
+    return Loaded(notes: _notes);
   }
 }

@@ -18,4 +18,9 @@ class Note {
         content: content ?? this.content,
         createdAt: createdAt ?? this.createdAt,
       );
+
+      @override
+  String toString() {
+    return "Note(id:$id, title:$title, content:$content, createdAt:$createdAt)\n";
+  }
 }

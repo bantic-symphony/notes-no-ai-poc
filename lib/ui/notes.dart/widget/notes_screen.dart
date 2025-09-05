@@ -6,6 +6,7 @@ import 'package:testing_riverpod/domain/model/home/notes.dart';
 import 'package:testing_riverpod/ui/notes.dart/notes_bloc.dart';
 import 'package:testing_riverpod/ui/notes.dart/notes_event.dart';
 import 'package:testing_riverpod/ui/notes.dart/notes_state.dart';
+import 'package:testing_riverpod/ui/notes.dart/widget/filter_popup_menu.dart';
 import 'package:testing_riverpod/ui/notes.dart/widget/note_card.dart';
 
 class NotesScreen extends StatelessWidget {
@@ -13,12 +14,21 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return RefreshIndicator(
       onRefresh: () async {
         return context.read<NotesBloc>().add(FetchNotes());
       },
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Notes"),
+          actions: [
+            FilterPopupMenu(
+              onOptionTapped: (FilterOptions option) {
+                context.read<NotesBloc>().add(FilterNotes(option: option));
+              },
+            ),
+          ],
+        ),
         body: BlocConsumer<NotesBloc, NotesState>(
           listener: (context, state) {
             if (state is NoteDeleted) {
@@ -48,7 +58,7 @@ class NotesScreen extends StatelessWidget {
               context.read<NotesBloc>().add(FetchNotes());
             }
           },
-          label: Text("New note"),
+          label: const Text("New note"),
         ),
       ),
     );
@@ -72,7 +82,7 @@ class NotesScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Expanded(child: Center(child: Text("No notes created"))),
+        child: Expanded(child: Center(child: const Text("No notes created"))),
       ),
     );
   }

@@ -24,31 +24,57 @@ class NoteCard extends StatelessWidget {
           AppRoutes.noteDetails,
           pathParameters: {"id": "${note.id}"},
         ),
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: double.infinity,
+          child: Card(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                Container(
                   width: double.infinity,
-                  child: Text(
-                    note.title,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 20,
-                    ).copyWith(fontWeight: FontWeight.w600),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      note.title,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 20,
+                        // color: Theme.of(context).colorScheme.primaryContainer,
+                      ).copyWith(fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-                Divider(height: 5, indent: 4, endIndent: 4),
-                Text(
-                  note.content,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle().copyWith(
-                    color: Colors.black.withAlpha(150),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      note.content,
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle().copyWith(
+                        color: Colors.black.withAlpha(150),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      note.createdAt,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                 ),
               ],
