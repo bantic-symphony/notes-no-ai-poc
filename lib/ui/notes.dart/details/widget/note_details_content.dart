@@ -15,6 +15,8 @@ class _NoteDetailsContentState extends State<NoteDetailsContent> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _desriptionController = TextEditingController();
 
+  String _title = "";
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NoteDetailsBloc, NoteDetailsState>(
@@ -22,8 +24,12 @@ class _NoteDetailsContentState extends State<NoteDetailsContent> {
         if (state is NoteLoaded) {
           _titleController.text = state.note.title;
           _desriptionController.text = state.note.content;
+          _title = state.screenTitle;
         }
         return Scaffold(
+          appBar: AppBar(
+          title: Text(_title),
+        ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.done_outline),
             onPressed: () {

@@ -11,7 +11,8 @@ class LoadingNote extends NoteDetailsState {}
 
 class NoteLoaded extends NoteDetailsState {
   final Note note;
-  NoteLoaded(this.note);
+  final String screenTitle;
+  NoteLoaded({required this.note, required this.screenTitle});
 }
 
 class NoTitleError extends NoteDetailsState {}

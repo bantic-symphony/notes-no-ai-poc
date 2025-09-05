@@ -31,13 +31,21 @@ class NoteDetailsBloc extends Bloc<NoteDetailsEvent, NoteDetailsState> {
   }
 
   void _getNote(GetNote event, Emitter<NoteDetailsState> emit) async {
-    if (event.noteId == "-1") return;
+    if (event.noteId == "-1") {
+      emit(
+        NoteLoaded(
+          note: Note(id: int.parse(event.noteId)),
+          screenTitle: "Create note"
+        ),
+      );
+      return;
+    }
     emit(LoadingNote());
     final result = await _getNoteUseCase(event.noteId);
     switch (result) {
       case Success():
         _note = result.value;
-        emit(NoteLoaded(result.value));
+        emit(NoteLoaded(note: result.value, screenTitle: "Edit note"));
       case Failure():
         emit(FailedLoadingNote());
     }
