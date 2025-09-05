@@ -54,7 +54,9 @@ final router = GoRouter(
                   builder: (context, state) {
                     final id = state.pathParameters['id'];
                     return BlocProvider<NoteDetailsBloc>(
-                      create: (context) => NoteDetailsBloc(locator(), locator())..add(GetNote(id ?? "-1")),
+                      create: (context) =>
+                          NoteDetailsBloc(locator(), locator())
+                            ..add(GetNote(id ?? "-1")),
                       child: NoteDetailsScreen(),
                     );
                   },

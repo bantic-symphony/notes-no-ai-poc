@@ -13,6 +13,7 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return RefreshIndicator(
       onRefresh: () async {
         return context.read<NotesBloc>().add(FetchNotes());
@@ -38,10 +39,14 @@ class NotesScreen extends StatelessWidget {
           },
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            GoRouter.of(
-              context,
-            ).pushNamed(AppRoutes.noteDetails, pathParameters: {"id": "-1"});
+          onPressed: () async {
+            final result = await context.pushNamed<bool>(
+              AppRoutes.noteDetails,
+              pathParameters: {"id": "-1"},
+            );
+            if (result == true) {
+              context.read<NotesBloc>().add(FetchNotes());
+            }
           },
           label: Text("New note"),
         ),
@@ -64,6 +69,11 @@ class NotesScreen extends StatelessWidget {
   }
 
   Widget _noNotesContent() {
-    return Expanded(child: Center(child: Text("No notes created")));
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Expanded(child: Center(child: Text("No notes created"))),
+      ),
+    );
   }
 }

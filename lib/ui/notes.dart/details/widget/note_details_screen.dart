@@ -23,7 +23,7 @@ class NoteDetailsScreen extends StatelessWidget {
             ),
           );
 
-          context.pop();
+          context.pop(true);
         }
       },
       child: NoteDetailsContent(),
