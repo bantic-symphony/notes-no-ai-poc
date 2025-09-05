@@ -44,7 +44,7 @@ class NotesScreen extends StatelessWidget {
               AppRoutes.noteDetails,
               pathParameters: {"id": "-1"},
             );
-            if (result == true) {
+            if (result == true && context.mounted) {
               context.read<NotesBloc>().add(FetchNotes());
             }
           },
