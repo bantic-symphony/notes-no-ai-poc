@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing_riverpod/core/error/result.dart';
 import 'package:testing_riverpod/domain/model/home/note.dart';
@@ -26,7 +23,6 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
   }
 
   void _fetchAllNotes(FetchNotes event, Emitter<NotesState> emit) async {
-    Future.delayed(const Duration(seconds: 2));
     final result = await _getAllNotesUsecase();
     final value = switch (result) {
       Success() => _handleSuccess(result.value),
@@ -41,16 +37,14 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
 
   void _deleteNote(DeleteNote event, Emitter<NotesState> emit) async {
     emit(Loading());
-    Future.delayed(const Duration(seconds: 2));
     final result = await _deleteNoteUsecase(event.note);
     final _ = switch (result) {
-      Success() => add(FetchNotes()),
+      Success() => emit(NoteDeleted()),
       Failure() => emit(_handleError(result.value)),
     };
   }
 
   void _filterNotes(FilterNotes event, Emitter<NotesState> emit) async {
-    debugPrint("_notes before sorting: ${_notes.notes}");
     switch (event.option) {
       case FilterOptions.byDate:
         _notes.notes.sort((Note a, Note b) => b.id.compareTo(a.id));
@@ -60,7 +54,6 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
               a.title[0].toLowerCase().compareTo(b.title[0].toLowerCase()),
         );
     }
-    debugPrint("_notes after sorting ${event.option.name}: ${_notes.notes}");
     emit(Loaded(notes: _notes));
   }
 
@@ -68,7 +61,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     return Error(message: exctepion.toString());
   }
 
-  Loaded _handleSuccess(Notes notes) {
+  NotesState _handleSuccess(Notes notes) {
     _notes.notes.clear();
     _notes.notes.addAll(notes.notes);
     return Loaded(notes: _notes);

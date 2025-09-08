@@ -43,7 +43,9 @@ final router = GoRouter(
               name: AppRoutes.home,
               parentNavigatorKey: _shellNavigatorHomeKey,
               builder: (context, state) => BlocProvider<NotesBloc>(
-                create: (context) => NotesBloc(locator(), locator())..add(FetchNotes()),
+                create: (context) =>
+                    NotesBloc(locator(), locator())
+                      ..add(FetchNotes()),
                 child: NotesScreen(),
               ),
               routes: [

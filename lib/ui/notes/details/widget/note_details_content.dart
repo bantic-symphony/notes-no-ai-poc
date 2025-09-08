@@ -14,6 +14,7 @@ class NoteDetailsContent extends StatefulWidget {
 class _NoteDetailsContentState extends State<NoteDetailsContent> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _desriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   String _title = "";
 
@@ -27,50 +28,60 @@ class _NoteDetailsContentState extends State<NoteDetailsContent> {
           _title = state.screenTitle;
         }
         return Scaffold(
-          appBar: AppBar(
-          title: Text(_title),
-        ),
+          appBar: AppBar(title: Text(_title)),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.done_outline),
             onPressed: () {
-              context.read<NoteDetailsBloc>().add(
-                SaveNote(
-                  content: _desriptionController.text,
-                  title: _titleController.text,
-                ),
-              );
+              if (_formKey.currentState!.validate()) {
+                context.read<NoteDetailsBloc>().add(
+                  SaveNote(
+                    content: _desriptionController.text,
+                    title: _titleController.text,
+                  ),
+                );
+              }
             },
           ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _titleController,
-                      decoration: InputDecoration(
-                        labelText: "Title",
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        border: OutlineInputBorder(),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _titleController,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty) {
+                            return "Please, entere some text";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Title",
+                          floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Divider(height: 1),
-                    ),
-                    TextFormField(
-                      controller: _desriptionController,
-                      maxLines: 20,
-                      expands: false,
-                      decoration: InputDecoration(
-                        labelText: "Description",
-                        alignLabelWithHint: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        border: OutlineInputBorder(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Divider(height: 1),
                       ),
-                    ),
-                  ],
+                      TextFormField(
+                        controller: _desriptionController,
+                        maxLines: 20,
+                        expands: false,
+                        decoration: InputDecoration(
+                          labelText: "Description",
+                          alignLabelWithHint: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

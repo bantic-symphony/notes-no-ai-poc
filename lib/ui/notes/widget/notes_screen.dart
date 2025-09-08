@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:testing_riverpod/app_router.dart';
 import 'package:testing_riverpod/domain/model/home/notes.dart';
+import 'package:testing_riverpod/ui/common/toast.dart';
 import 'package:testing_riverpod/ui/notes/notes_bloc.dart';
 import 'package:testing_riverpod/ui/notes/notes_event.dart';
 import 'package:testing_riverpod/ui/notes/notes_state.dart';
@@ -31,13 +32,9 @@ class NotesScreen extends StatelessWidget {
         ),
         body: BlocConsumer<NotesBloc, NotesState>(
           listener: (context, state) {
+            context.read<NotesBloc>().add(FetchNotes());
             if (state is NoteDeleted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('${state.note} deleted!'),
-                  backgroundColor: Colors.redAccent,
-                ),
-              );
+              notesSnackBar(context, 'Note deleted!', Colors.redAccent);
             }
           },
           builder: (context, state) {

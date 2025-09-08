@@ -1,4 +1,3 @@
-import 'package:testing_riverpod/domain/model/home/note.dart';
 import 'package:testing_riverpod/domain/model/home/notes.dart';
 
 abstract class NotesState {}
@@ -10,12 +9,9 @@ class Loaded extends NotesState {
   Loaded({required this.notes});
 }
 
-class NoteDeleted extends NotesState {
-  Note note;
-  NoteDeleted(this.note);
-}
-
 class Emtpy extends NotesState {}
+
+class NoteDeleted extends NotesState {}
 
 class GoToNewNote extends NotesState {
   String noteId;
