@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:testing_riverpod/app_router.dart';
 import 'package:testing_riverpod/domain/model/home/note.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_event.dart';
+import 'package:testing_riverpod/ui/notes/notes_bloc.dart';
+import 'package:testing_riverpod/ui/notes/notes_event.dart';
 
 class NoteCard extends StatelessWidget {
   const NoteCard({required this.note, super.key});

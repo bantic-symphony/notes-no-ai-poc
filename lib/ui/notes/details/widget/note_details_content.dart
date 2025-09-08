@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_event.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_state.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_bloc.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_event.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_state.dart';
 
 class NoteDetailsContent extends StatefulWidget {
   const NoteDetailsContent({super.key});

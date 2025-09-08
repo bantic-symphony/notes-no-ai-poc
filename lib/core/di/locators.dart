@@ -11,8 +11,8 @@ import 'package:testing_riverpod/domain/usecase/notes/delete_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_all_notes_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/store_note_usecase.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_bloc.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_bloc.dart';
+import 'package:testing_riverpod/ui/notes/notes_bloc.dart';
 
 final GetIt locator = GetIt.instance;
 

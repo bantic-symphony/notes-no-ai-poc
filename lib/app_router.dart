@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:testing_riverpod/core/di/locators.dart';
 import 'package:testing_riverpod/scaffold_with_navbar.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_event.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/widget/note_details_screen.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_event.dart';
-import 'package:testing_riverpod/ui/notes.dart/widget/notes_screen.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_bloc.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_event.dart';
+import 'package:testing_riverpod/ui/notes/details/widget/note_details_screen.dart';
+import 'package:testing_riverpod/ui/notes/notes_bloc.dart';
+import 'package:testing_riverpod/ui/notes/notes_event.dart';
+import 'package:testing_riverpod/ui/notes/widget/notes_screen.dart';
 import 'package:testing_riverpod/ui/settings/widget/settings_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();

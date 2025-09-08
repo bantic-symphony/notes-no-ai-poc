@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing_riverpod/core/error/result.dart';
@@ -5,9 +7,9 @@ import 'package:testing_riverpod/domain/model/home/note.dart';
 import 'package:testing_riverpod/domain/model/home/notes.dart';
 import 'package:testing_riverpod/domain/usecase/notes/delete_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_all_notes_usecase.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_event.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_state.dart';
-import 'package:testing_riverpod/ui/notes.dart/widget/filter_popup_menu.dart';
+import 'package:testing_riverpod/ui/notes/notes_event.dart';
+import 'package:testing_riverpod/ui/notes/notes_state.dart';
+import 'package:testing_riverpod/ui/notes/widget/filter_popup_menu.dart';
 
 class NotesBloc extends Bloc<NotesEvent, NotesState> {
   final GetAllNotesUsecase _getAllNotesUsecase;
@@ -24,6 +26,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
   }
 
   void _fetchAllNotes(FetchNotes event, Emitter<NotesState> emit) async {
+    Future.delayed(const Duration(seconds: 2));
     final result = await _getAllNotesUsecase();
     final value = switch (result) {
       Success() => _handleSuccess(result.value),
@@ -38,6 +41,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
 
   void _deleteNote(DeleteNote event, Emitter<NotesState> emit) async {
     emit(Loading());
+    Future.delayed(const Duration(seconds: 2));
     final result = await _deleteNoteUsecase(event.note);
     final _ = switch (result) {
       Success() => add(FetchNotes()),

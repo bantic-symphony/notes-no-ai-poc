@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:testing_riverpod/app_router.dart';
 import 'package:testing_riverpod/domain/model/home/notes.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_event.dart';
-import 'package:testing_riverpod/ui/notes.dart/notes_state.dart';
-import 'package:testing_riverpod/ui/notes.dart/widget/filter_popup_menu.dart';
-import 'package:testing_riverpod/ui/notes.dart/widget/note_card.dart';
+import 'package:testing_riverpod/ui/notes/notes_bloc.dart';
+import 'package:testing_riverpod/ui/notes/notes_event.dart';
+import 'package:testing_riverpod/ui/notes/notes_state.dart';
+import 'package:testing_riverpod/ui/notes/widget/filter_popup_menu.dart';
+import 'package:testing_riverpod/ui/notes/widget/note_card.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
@@ -42,6 +42,7 @@ class NotesScreen extends StatelessWidget {
           },
           builder: (context, state) {
             return switch (state) {
+              Loading() => _loadingContent(),
               Loaded() => _loadedContent(state.notes, context),
               Emtpy() => _noNotesContent(),
               _ => _noNotesContent(),
@@ -71,7 +72,9 @@ class NotesScreen extends StatelessWidget {
         child: GridView.count(
           crossAxisCount: 2,
           children: notes.notes
-              .map<Widget>((note) => NoteCard(note: note))
+              .map<Widget>(
+                (note) => NoteCard(note: note, key: Key(note.id.toString())),
+              )
               .toList(),
         ),
       ),
@@ -83,6 +86,16 @@ class NotesScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Expanded(child: Center(child: const Text("No notes created"))),
+      ),
+    );
+  }
+
+  Widget _loadingContent() {
+    return SafeArea(
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: CircularProgressIndicator(),
       ),
     );
   }

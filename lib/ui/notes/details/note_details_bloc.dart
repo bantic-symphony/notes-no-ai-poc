@@ -3,8 +3,8 @@ import 'package:testing_riverpod/core/error/result.dart';
 import 'package:testing_riverpod/domain/model/home/note.dart';
 import 'package:testing_riverpod/domain/usecase/notes/get_note_usecase.dart';
 import 'package:testing_riverpod/domain/usecase/notes/store_note_usecase.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_event.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_state.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_event.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_state.dart';
 
 class NoteDetailsBloc extends Bloc<NoteDetailsEvent, NoteDetailsState> {
   final StoreNoteUsecase _storeNoteUsecase;

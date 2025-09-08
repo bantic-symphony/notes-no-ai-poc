@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_bloc.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/note_details_state.dart';
-import 'package:testing_riverpod/ui/notes.dart/details/widget/note_details_content.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_bloc.dart';
+import 'package:testing_riverpod/ui/notes/details/note_details_state.dart';
+import 'package:testing_riverpod/ui/notes/details/widget/note_details_content.dart';
 
 class NoteDetailsScreen extends StatelessWidget {
   const NoteDetailsScreen({super.key});
@@ -18,6 +18,10 @@ class NoteDetailsScreen extends StatelessWidget {
               : 'Note created!';
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              margin: EdgeInsets.all(20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.all(Radius.circular(8)),
+              ),
               content: Text(toastText),
               backgroundColor: Colors.greenAccent,
             ),

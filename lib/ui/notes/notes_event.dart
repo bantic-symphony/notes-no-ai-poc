@@ -1,5 +1,5 @@
 import 'package:testing_riverpod/domain/model/home/note.dart';
-import 'package:testing_riverpod/ui/notes.dart/widget/filter_popup_menu.dart';
+import 'package:testing_riverpod/ui/notes/widget/filter_popup_menu.dart';
 
 abstract class NotesEvent {}
 
