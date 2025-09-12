@@ -26,7 +26,6 @@ class ScaffoldWithNavbar extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(onPressed: () {}, label: Text("New note")),
     );
   }
 }
